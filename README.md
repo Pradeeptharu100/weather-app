@@ -28,7 +28,7 @@ A simple weather app built with Flutter that provides current weather informatio
 
 - Demo Video Link : https://drive.google.com/file/d/1CVmcon5UmDqClhCeyFR1_8wasiit4zFS/view?usp=drive_link
 
-Include some screenshots of your app to showcase its UI and features.
+
 
 ## Installation
 
