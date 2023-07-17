@@ -17,7 +17,7 @@ class WeatherIcon extends StatelessWidget {
               return;
             },
             child: Transform.scale(
-              scale: mediaQueryHeight(context) * 0.003,
+              scale: mediaQueryHeight(context) * 0.004,
               child: Image.network(
                 iconUrl,
                 height: height * 0.2,

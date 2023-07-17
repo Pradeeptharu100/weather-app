@@ -17,10 +17,15 @@ class HomeProvider extends ChangeNotifier {
   );
   bool _locationFound = true;
   bool _isLoading = false;
-
   WeatherData get weatherData => _weatherData;
   bool get locationFound => _locationFound;
   bool get isLoading => _isLoading;
+  bool isEditing = false;
+
+  void updateEditingState(bool editing) {
+    isEditing = editing;
+    notifyListeners();
+  }
 
   Future<void> fetchDefaultWeatherData() async {
     _isLoading = true;
@@ -53,5 +58,11 @@ class HomeProvider extends ChangeNotifier {
 
     _isLoading = false;
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 }

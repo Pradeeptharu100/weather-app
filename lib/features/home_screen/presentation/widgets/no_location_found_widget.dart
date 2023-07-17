@@ -11,8 +11,9 @@ class NoLocationImageWidget extends StatelessWidget {
       builder: (context, homeProvider, _) {
         return Image.asset(
           ImagePath.noLocationFound,
-          height: height * 0.5,
-          width: height * 0.7,
+          height: height * 0.4,
+          width: height * 0.8,
+          fit: BoxFit.fitHeight,
         );
       },
     );

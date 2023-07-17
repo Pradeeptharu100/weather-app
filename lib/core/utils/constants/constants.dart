@@ -106,7 +106,6 @@ bool isTablet(BuildContext context) {
 class ImagePath {
   static const splashFrame = 'assets/images/frame.png';
   static const windSpeedIcon = 'assets/images/wind.png';
-  static const tempretureIcon = 'assets/images/temp.png';
   static const humidityIcon = 'assets/images/humidity.png';
   static const noLocationFound = 'assets/images/no_location_found.png';
   static const appIcon = 'assets/images/weather.png';

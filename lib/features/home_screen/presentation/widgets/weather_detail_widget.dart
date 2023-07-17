@@ -116,10 +116,13 @@ class _WeatherDetailsWidgetState extends State<WeatherDetailsWidget> {
       height: height * 0.22,
       width: width * 0.5,
       child: Card(
+        shadowColor: Colors.white,
+        elevation: 5,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(height * 0.02),
         ),
-        color: const Color(0x806ef9e9),
+        // color: const Color(0x806ef9e9),
+        color: Colors.white54,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [

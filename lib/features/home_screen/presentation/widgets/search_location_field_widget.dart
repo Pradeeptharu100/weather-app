@@ -1,6 +1,6 @@
 import '../export_widgets.dart';
 
-class SearchLocationFieldWidget extends StatelessWidget {
+class SearchLocationFieldWidget extends StatefulWidget {
   const SearchLocationFieldWidget({
     Key? key,
     required TextEditingController searchController,
@@ -11,6 +11,20 @@ class SearchLocationFieldWidget extends StatelessWidget {
 
   final TextEditingController _searchController;
   final VoidCallback _searchWeather;
+
+  @override
+  State<SearchLocationFieldWidget> createState() =>
+      _SearchLocationFieldWidgetState();
+}
+
+class _SearchLocationFieldWidgetState extends State<SearchLocationFieldWidget> {
+  @override
+  void initState() {
+    super.initState();
+    _focusNode = FocusNode();
+  }
+
+  late FocusNode _focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +39,21 @@ class SearchLocationFieldWidget extends StatelessWidget {
       child: Consumer<HomeProvider>(
         builder: (context, homeProvider, _) {
           return TextFormField(
+            focusNode: _focusNode,
             onFieldSubmitted: (value) {
-              _searchController.text = value;
+              widget._searchController.text = value;
+              widget._searchWeather();
+              widget._searchController.clear();
+            },
+            onChanged: (value) {
+              Provider.of<HomeProvider>(context, listen: false)
+                  .updateEditingState(value.isNotEmpty);
+              if (value.isEmpty) {
+                _focusNode.unfocus();
+              }
             },
             style: TextStyle(fontSize: height * 0.025),
-            controller: _searchController,
+            controller: widget._searchController,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.symmetric(
                 horizontal: width * 0.06,
@@ -48,14 +72,15 @@ class SearchLocationFieldWidget extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  _searchWeather();
-                  if (homeProvider.locationFound) {
-                    _searchController.clear();
+                  if (widget._searchController.text.isEmpty) {
+                    return;
                   }
+                  widget._searchWeather();
+                  widget._searchController.clear();
                 },
                 child: customText(
                   context: context,
-                  text: 'Update',
+                  text: homeProvider.isEditing ? 'Update' : 'Save',
                   color: Colors.white,
                 ),
               ),

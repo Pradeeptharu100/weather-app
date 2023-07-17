@@ -5,6 +5,7 @@ import 'package:weather_app/core/utils/custom_widgets/custom_text.dart';
 import 'package:weather_app/features/home_screen/presentation/pages/home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
+  static const routeName = '/splashScreen';
   const SplashScreen({super.key});
 
   @override
@@ -16,18 +17,22 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    Future.delayed(const Duration(seconds: 5), () {
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => HomeScreen()));
+    });
+  }
 
-    //   Future.delayed(Duration(seconds: 5), () {
-    //     Navigator.of(context).pushReplacement(
-    //         MaterialPageRoute(builder: (context) => HomScreen2()));
-    //   });
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     double height = mediaQueryHeight(context);
     return Scaffold(
-      backgroundColor: AppColor.scaffoldBackgroundColor,
+      backgroundColor: Colors.grey.shade200,
       body: Container(
         constraints: const BoxConstraints.expand(),
         decoration: const BoxDecoration(
@@ -58,7 +63,7 @@ class _SplashScreenState extends State<SplashScreen> {
             SizedBox(height: height * 0.25),
             SpinKitWave(
               size: height * 0.07,
-              color: Colors.yellow,
+              color: Colors.blue,
             ),
           ],
         ),
@@ -67,6 +72,7 @@ class _SplashScreenState extends State<SplashScreen> {
         alignment: Alignment.bottomCenter,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.deepOrange,
             fixedSize: Size(height * 0.2, height * 0.06),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(height * 0.015),
