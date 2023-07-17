@@ -6,8 +6,7 @@ import 'package:weather_app/features/home_screen/presentation/pages/home_screen.
 
 class SplashScreen extends StatefulWidget {
   static const routeName = '/splashScreen';
-  const SplashScreen({super.key});
-
+  const SplashScreen({Key? key}) : super(key: key);
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
@@ -18,14 +17,8 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 5), () {
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => HomeScreen()));
+      Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
     });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
@@ -35,8 +28,17 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: Colors.grey.shade200,
       body: Container(
         constraints: const BoxConstraints.expand(),
-        decoration: const BoxDecoration(
-          image: DecorationImage(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.white.withOpacity(0.25),
+              Colors.greenAccent.withOpacity(0.50),
+              Colors.white.withOpacity(0.25),
+            ],
+          ),
+          image: const DecorationImage(
             image: AssetImage(ImagePath.splashFrame),
             fit: BoxFit.cover,
           ),
@@ -84,7 +86,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => HomeScreen(),
+                  builder: (context) => const HomeScreen(),
                 ));
           },
         ),

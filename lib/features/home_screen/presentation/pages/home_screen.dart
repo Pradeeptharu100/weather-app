@@ -1,5 +1,6 @@
 import 'package:weather_app/features/home_screen/presentation/export_widgets.dart';
 import 'package:weather_app/features/home_screen/presentation/widgets/weather_detail_widget.dart';
+import 'package:weather_app/features/splash_screen/presentation/pages/splash_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -11,6 +12,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _searchController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -45,18 +47,19 @@ class _HomeScreenState extends State<HomeScreen> {
         title: customText(context: context, text: 'Weather App'),
         elevation: 0,
         leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: Colors.black,
-              size: height * 0.04,
-            ),
-            onPressed: () {
-              if (homeProvider.locationFound) {
-                Navigator.pop(context);
-              } else {
-                homeProvider.fetchDefaultWeatherData();
-              }
-            }),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+            size: height * 0.04,
+          ),
+          onPressed: () {
+            if (homeProvider.locationFound) {
+              Navigator.pushNamed(context, SplashScreen.routeName);
+            } else {
+              homeProvider.fetchDefaultWeatherData();
+            }
+          },
+        ),
         automaticallyImplyLeading: true,
       ),
       backgroundColor: Colors.grey.shade200,
@@ -82,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: height * 0.02),
-                _buildSearchLocationField(),
+                _buildSearchLocationField(homeProvider),
                 if (homeProvider.isLoading)
                   SizedBox(
                     height: height * 0.1,
@@ -110,14 +113,25 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.green,
                           ),
                         ),
+                        SizedBox(
+                          height: height * 0.01,
+                        ),
+                        Center(
+                          child: customText(
+                            context: context,
+                            text: homeProvider.weatherData.country,
+                            fontSize: height * 0.04,
+                            letterSpacing: 1.5,
+                            color: Colors.green,
+                          ),
+                        ),
                         SizedBox(height: height * 0.02),
                         Center(
                           child: Column(
                             children: [
                               customText(
                                 context: context,
-                                text:
-                                    homeProvider.weatherData.feelLikeCondition,
+                                text: homeProvider.weatherData.weatherCondition,
                                 fontSize: height * 0.04,
                                 letterSpacing: 1.5,
                               ),
@@ -135,12 +149,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   _buildWeatherConditionIcon(
+                                    context: context,
                                     iconPath: ImagePath.windSpeedIcon,
                                     text:
                                         '${homeProvider.weatherData.windSpeed.toStringAsFixed(2)} km/h',
                                   ),
                                   SizedBox(width: width * 0.05),
                                   _buildWeatherConditionIcon(
+                                    context: context,
                                     iconPath: ImagePath.humidityIcon,
                                     text:
                                         '${homeProvider.weatherData.humidity}%',
@@ -187,23 +203,34 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildSearchLocationField() {
+  Widget _buildSearchLocationField(HomeProvider homeProvider) {
     return SearchLocationFieldWidget(
       searchController: _searchController,
       searchWeather: () {
         _searchWeather();
-        if (Provider.of<HomeProvider>(context, listen: false).locationFound) {
+        if (homeProvider.locationFound) {
           _searchController.clear();
         }
       },
     );
   }
 
-  Widget _buildWeatherConditionIcon(
-      {required String iconPath, required String text}) {
-    return WeatherConditionIcon(
-      iconPath: iconPath,
-      text: text,
+  Widget _buildWeatherConditionIcon({
+    required String iconPath,
+    required String text,
+    required BuildContext context,
+  }) {
+    double height = mediaQueryHeight(context);
+    return Column(
+      children: [
+        Image.asset(
+          iconPath,
+          width: height * 0.05,
+          height: height * 0.05,
+        ),
+        const SizedBox(height: 8),
+        Text(text),
+      ],
     );
   }
 

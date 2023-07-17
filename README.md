@@ -25,7 +25,6 @@ git clone https://github.com/your-username/flutter-weather-app.git
 cd flutter-weather-app
 
 3. Install the dependencies:
-
 flutter pub get
 
 4. Run the app:
@@ -52,6 +51,8 @@ const apiKey = '3278020c74f49a9523cea34dedc80791';
 - `cupertino_icons: ^1.0.2`
 - `flutter_spinkit: ^5.2.0`
 - `intl: ^0.18.1`
+- `shared_preferences: ^2.2.0`
+
 
 ## Contributing
 

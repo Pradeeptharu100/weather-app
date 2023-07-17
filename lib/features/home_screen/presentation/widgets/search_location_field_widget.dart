@@ -1,6 +1,6 @@
 import '../export_widgets.dart';
 
-class SearchLocationFieldWidget extends StatefulWidget {
+class SearchLocationFieldWidget extends StatelessWidget {
   const SearchLocationFieldWidget({
     Key? key,
     required TextEditingController searchController,
@@ -13,81 +13,79 @@ class SearchLocationFieldWidget extends StatefulWidget {
   final VoidCallback _searchWeather;
 
   @override
-  State<SearchLocationFieldWidget> createState() =>
-      _SearchLocationFieldWidgetState();
-}
-
-class _SearchLocationFieldWidgetState extends State<SearchLocationFieldWidget> {
-  @override
-  void initState() {
-    super.initState();
-    _focusNode = FocusNode();
-  }
-
-  late FocusNode _focusNode;
-
-  @override
   Widget build(BuildContext context) {
-    double height = mediaQueryHeight(context);
-    double width = mediaQueryWidth(context);
-
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: height * 0.02,
-        vertical: height * 0.01,
-      ),
-      child: Consumer<HomeProvider>(
-        builder: (context, homeProvider, _) {
-          return TextFormField(
-            focusNode: _focusNode,
+    return Consumer<HomeProvider>(
+      builder: (context, homeProvider, _) {
+        return Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.height * 0.02,
+            vertical: MediaQuery.of(context).size.height * 0.01,
+          ),
+          child: TextFormField(
+            focusNode: homeProvider.focusNode,
             onFieldSubmitted: (value) {
-              widget._searchController.text = value;
-              widget._searchWeather();
-              widget._searchController.clear();
+              if (_searchController.text.isEmpty) {
+                return;
+              }
+              _searchController.text = value;
+              _searchWeather();
+              _searchController.clear();
+              homeProvider.updateDataSavedStatus(
+                  true); // Update data saved status using Provider
             },
             onChanged: (value) {
-              Provider.of<HomeProvider>(context, listen: false)
-                  .updateEditingState(value.isNotEmpty);
+              homeProvider.updateEditingState(value.isNotEmpty);
               if (value.isEmpty) {
-                _focusNode.unfocus();
+                homeProvider.focusNode.unfocus();
               }
+              homeProvider.updateDataSavedStatus(
+                  false); // Update data saved status using Provider
             },
-            style: TextStyle(fontSize: height * 0.025),
-            controller: widget._searchController,
+            style:
+                TextStyle(fontSize: MediaQuery.of(context).size.height * 0.025),
+            controller: _searchController,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.symmetric(
-                horizontal: width * 0.06,
-                vertical: height * 0.02,
+                horizontal: MediaQuery.of(context).size.width * 0.06,
+                vertical: MediaQuery.of(context).size.height * 0.02,
               ),
               labelText: 'Search Location',
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(height * 0.015),
+                borderRadius: BorderRadius.circular(
+                    MediaQuery.of(context).size.height * 0.015),
               ),
               suffixIcon: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red,
-                  fixedSize: Size(width * 0.25, height * 0.07),
+                  fixedSize: Size(MediaQuery.of(context).size.width * 0.25,
+                      MediaQuery.of(context).size.height * 0.07),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(height * 0.015),
+                    borderRadius: BorderRadius.circular(
+                        MediaQuery.of(context).size.height * 0.015),
                   ),
                 ),
                 onPressed: () {
-                  if (widget._searchController.text.isEmpty) {
+                  if (_searchController.text.isEmpty) {
                     return;
                   }
-                  widget._searchWeather();
-                  widget._searchController.clear();
+                  _searchWeather();
+                  _searchController.clear();
+                  homeProvider.updateDataSavedStatus(
+                      true); // Update data saved status using Provider
                 },
                 child: customText(
                   context: context,
-                  text: homeProvider.isEditing ? 'Update' : 'Save',
+                  text: homeProvider.isDataSaved ||
+                          _searchController.text.isEmpty
+                      ? 'Save'
+                      : 'Update', // Toggle button text based on isDataSaved value from Provider
                   color: Colors.white,
                 ),
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

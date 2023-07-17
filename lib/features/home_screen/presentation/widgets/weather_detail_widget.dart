@@ -24,7 +24,7 @@ class _WeatherDetailsWidgetState extends State<WeatherDetailsWidget> {
               context: context,
               image: ImagePath.feel_likeIcon,
               title: 'FeelLike',
-              data: homeProvider.weatherData.feelLikeCondition,
+              data: homeProvider.weatherData.feelsLikeTemperature.toString(),
             ),
             _buildWeatherDetails(
               context: context,
@@ -85,7 +85,8 @@ class _WeatherDetailsWidgetState extends State<WeatherDetailsWidget> {
 
     switch (title) {
       case 'FeelLike':
-        updatedData = homeProvider.weatherData.feelLikeCondition;
+        updatedData =
+            homeProvider.weatherData.feelsLikeTemperature.toStringAsFixed(2);
         break;
       case 'N wind':
         updatedData =
@@ -145,6 +146,6 @@ class _WeatherDetailsWidgetState extends State<WeatherDetailsWidget> {
   }
 
   String _formatTemperature(double temperature) {
-    return temperature.toStringAsFixed(1) + ' °C';
+    return '${temperature.toStringAsFixed(1)} °C';
   }
 }
