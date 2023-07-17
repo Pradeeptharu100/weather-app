@@ -12,16 +12,19 @@ A simple weather app built with Flutter that provides current weather informatio
 
 ## Screenshots
 - Splash Screen
-  ![splash_screen](https://github.com/Professor150/Weather_app/assets/111327972/16989469-527f-47e3-bf96-d2b88629947f)
+  ![splash_screen](https://github.com/Professor150/Weather-App/assets/111327972/8b4a4d22-c15b-453d-a527-040713ad2730)
+
 
 - Home Screen
-  ![homescreen](https://github.com/Professor150/Weather_app/assets/111327972/b69b36c5-1ae1-42f1-b46b-b70c9cb4419f)
+ ![homescreen](https://github.com/Professor150/Weather-App/assets/111327972/901daa8b-275c-4c1a-bad0-81bc647e24a9)
+
 
 - No Location found image
-  ![no location found](https://github.com/Professor150/Weather_app/assets/111327972/f344d4b3-ead0-40a6-8fef-cb251033a079)
+ ![no location found](https://github.com/Professor150/Weather-App/assets/111327972/4977fea1-2a98-4ce7-acdb-5c9238b3cee4)
 
 - Home Screen Weather
-  ![home_screen_weather](https://github.com/Professor150/Weather_app/assets/111327972/b3aa33e1-b932-4b5c-b9ba-4bcaf08cbf04)
+![home_screen_weather](https://github.com/Professor150/Weather-App/assets/111327972/6b88c1a8-d2bf-4d69-9c37-135ca3dd9dc8)
+
 
 - Demo Video Link : https://drive.google.com/file/d/1CVmcon5UmDqClhCeyFR1_8wasiit4zFS/view?usp=drive_link
 
@@ -65,6 +68,7 @@ const apiKey  = 'Your_API_Key';
 - `cupertino_icons: ^1.0.2`
 - `flutter_spinkit: ^5.2.0`
 - `intl: ^0.18.1`
+- `shared_preferences: ^2.2.0`
 
 ## Contributing
 
