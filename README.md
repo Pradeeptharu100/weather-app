@@ -6,7 +6,7 @@ A simple weather app built with Flutter that provides current weather informatio
 
 ## Features
 
-- Display current weather information including temperature, description, and location.
+- Display current weather information including temperature, description, country ,and location.
 - Support for searching weather information by location.
 - Integration with a weather API to fetch real-time weather data.
 
