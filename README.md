@@ -34,7 +34,7 @@ Include some screenshots of your app to showcase its UI and features.
 
 1. Clone the repository to your local machine:
 
-git clone https://github.com/your-username/flutter-weather-app.git
+git clone [https://github.com/your-username/flutter-weather-app.git](https://github.com/Professor150/Weather-App.git)
 
 2. Change to the project directory:
 
