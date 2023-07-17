@@ -30,16 +30,14 @@ class SearchLocationFieldWidget extends StatelessWidget {
               _searchController.text = value;
               _searchWeather();
               _searchController.clear();
-              homeProvider.updateDataSavedStatus(
-                  true); // Update data saved status using Provider
+              homeProvider.updateDataSavedStatus(true);
             },
             onChanged: (value) {
               homeProvider.updateEditingState(value.isNotEmpty);
               if (value.isEmpty) {
                 homeProvider.focusNode.unfocus();
               }
-              homeProvider.updateDataSavedStatus(
-                  false); // Update data saved status using Provider
+              homeProvider.updateDataSavedStatus(false);
             },
             style:
                 TextStyle(fontSize: MediaQuery.of(context).size.height * 0.025),
@@ -70,15 +68,14 @@ class SearchLocationFieldWidget extends StatelessWidget {
                   }
                   _searchWeather();
                   _searchController.clear();
-                  homeProvider.updateDataSavedStatus(
-                      true); // Update data saved status using Provider
+                  homeProvider.updateDataSavedStatus(true);
                 },
                 child: customText(
                   context: context,
-                  text: homeProvider.isDataSaved ||
-                          _searchController.text.isEmpty
-                      ? 'Save'
-                      : 'Update', // Toggle button text based on isDataSaved value from Provider
+                  text:
+                      homeProvider.isDataSaved || _searchController.text.isEmpty
+                          ? 'Save'
+                          : 'Update',
                   color: Colors.white,
                 ),
               ),
