@@ -13,8 +13,13 @@ A sleek, responsive weather app built with Flutter. This app provides real-time 
 - **⏳ Loading Animations**: Displays stylish loading animations with `flutter_spinkit`.
 
 ## 📸 Screenshots
+###Splash Screen
+![Screenshot_1730171751](https://github.com/user-attachments/assets/9933cae4-9810-46e5-b219-c69342ce1207)
+###Home screen
+![Screenshot_1730171737](https://github.com/user-attachments/assets/a5b610e7-d7b3-4b4f-95ea-586b200cf53a)
+###Location not fount
+![Screenshot_1730171751](https://github.com/user-attachments/assets/e5f89a0d-a08f-4d93-ad2f-805f7b0df5ad)
 
-> **_Insert screenshots here_** to showcase the interface, such as the home screen, search, and weather detail screens.
 
 ## 🛠️ Getting Started
 
