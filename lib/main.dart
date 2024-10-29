@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/features/home_screen/presentation/provider/home_provider.dart';
 import 'package:weather_app/routes/app_routes.dart';
@@ -20,19 +21,22 @@ class WeatherApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => HomeProvider(),
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        title: 'Weather App',
-        theme: ThemeData(
-          appBarTheme: AppBarTheme(
-            centerTitle: true,
-            backgroundColor: Colors.grey.shade200,
+      child: ScreenUtilInit(
+        designSize: ScreenUtil.defaultSize,
+        builder: (context, child) => MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          title: 'Weather App',
+          theme: ThemeData(
+            appBarTheme: AppBarTheme(
+              centerTitle: true,
+              backgroundColor: Colors.grey.shade200,
+            ),
+            scaffoldBackgroundColor: Colors.white,
           ),
-          scaffoldBackgroundColor: Colors.white,
+          routerDelegate: appRouter.routerDelegate,
+          routeInformationParser: appRouter.routeInformationParser,
+          routeInformationProvider: appRouter.routeInformationProvider,
         ),
-        routerDelegate: appRouter.routerDelegate,
-        routeInformationParser: appRouter.routeInformationParser,
-        routeInformationProvider: appRouter.routeInformationProvider,
       ),
     );
   }
