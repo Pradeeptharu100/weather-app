@@ -1,94 +1,108 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:weather_app/core/utils/constants/constants.dart';
-import 'package:weather_app/core/utils/custom_widgets/custom_text.dart';
-import 'package:weather_app/features/home_screen/presentation/pages/home_screen.dart';
+import 'package:go_router/go_router.dart';
 
 class SplashScreen extends StatefulWidget {
-  static const routeName = '/splashScreen';
   const SplashScreen({Key? key}) : super(key: key);
+
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  // time for 5 send to go automatically in homeScreen
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 5), () {
-      Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+    Future.delayed(const Duration(seconds: 3), () {
+      context.go('/home');
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    double height = mediaQueryHeight(context);
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
       body: Container(
-        constraints: const BoxConstraints.expand(),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Colors.white.withOpacity(0.25),
-              Colors.greenAccent.withOpacity(0.50),
-              Colors.white.withOpacity(0.25),
+              Color(0xFF2E335A),
+              Color(0xFF1C1B33),
             ],
           ),
-          image: const DecorationImage(
-            image: AssetImage(ImagePath.splashFrame),
-            fit: BoxFit.cover,
-          ),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: height * 0.12),
-              child: customText(
-                context: context,
-                text: 'We show weather for you',
-                fontWeight: FontWeight.w500,
-                letterSpacing: 1.5,
-                fontSize: height * 0.025,
+        child: SafeArea(
+          child: Column(
+            children: [
+              const SizedBox(height: 60),
+              const Text(
+                'We show weather for you',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                  letterSpacing: 0.5,
+                ),
               ),
-            ),
-            Center(
-              child: Image.asset(
-                ImagePath.appIcon,
-                height: height * 0.3,
+              const Spacer(),
+              Container(
+                width: 150,
+                height: 150,
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.15),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Icon(
+                      Icons.cloud,
+                      size: 100,
+                      color: Colors.white.withOpacity(0.7),
+                    ),
+                    Positioned(
+                      top: 30,
+                      right: 30,
+                      child: Icon(
+                        Icons.sunny,
+                        size: 60,
+                        color: Colors.yellow[600],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: height * 0.25),
-            SpinKitWave(
-              size: height * 0.07,
-              color: Colors.blue,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: Align(
-        alignment: Alignment.bottomCenter,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.deepOrange,
-            fixedSize: Size(height * 0.2, height * 0.06),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(height * 0.015),
-            ),
+              const Spacer(),
+              // Loading indicator
+              const SpinKitWave(
+                color: Colors.blue,
+                size: 40.0,
+              ),
+              const SizedBox(height: 60),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 30),
+                child: ElevatedButton(
+                  onPressed: () => context.go('/home'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 8, 85, 148),
+                    minimumSize: const Size(double.infinity, 45),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: const Text(
+                    'Skip',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-          child:
-              customText(context: context, text: 'Skip', color: Colors.white),
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const HomeScreen(),
-                ));
-          },
         ),
       ),
     );

@@ -1,9 +1,14 @@
-import '../export_widgets.dart';
+import 'dart:async';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../export_widgets.dart';
+
 class HomeProvider extends ChangeNotifier {
+  //Controller
   final WeatherService _weatherService = WeatherService();
   final TextEditingController controller = TextEditingController();
+  // Variables
   late WeatherData _weatherData = WeatherData(
     country: '',
     mainCondition: '',
@@ -18,18 +23,25 @@ class HomeProvider extends ChangeNotifier {
     tempMin: 0,
     weatherCondition: '',
   );
-  bool _locationFound = true;
-  bool _isLoading = false;
-  WeatherData get weatherData => _weatherData;
-  bool get locationFound => _locationFound;
-  bool get isLoading => _isLoading;
   bool isEditing = false;
   String? previousSearch;
   bool _isDataSaved = false;
+  bool _locationFound = true;
+  bool _isLoading = false;
+  Timer? _debounceTimer;
+
+  // Getters
+  WeatherData get weatherData => _weatherData;
+  bool get locationFound => _locationFound;
+  bool get isLoading => _isLoading;
   bool get isDataSaved => _isDataSaved;
   final FocusNode _focusNode = FocusNode();
   FocusNode get focusNode => _focusNode;
+// Methods
 
+  HomeProvider() {
+    fetchDefaultWeatherData();
+  }
   void updateDataSavedStatus(bool newValue) {
     _isDataSaved = newValue;
     notifyListeners();
@@ -93,7 +105,18 @@ class HomeProvider extends ChangeNotifier {
 
   @override
   void dispose() {
+    _debounceTimer?.cancel();
     controller.dispose();
     super.dispose();
+  }
+
+  void onSearchChanged(BuildContext context) {
+    if (_debounceTimer?.isActive ?? false) _debounceTimer!.cancel();
+    _debounceTimer = Timer(const Duration(milliseconds: 500), () {
+      if (controller.text.isNotEmpty) {
+        final homeProvider = Provider.of<HomeProvider>(context, listen: false);
+        homeProvider.searchWeather(controller.text);
+      }
+    });
   }
 }
